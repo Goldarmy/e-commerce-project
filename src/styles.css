@@ -1,4 +1,96 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Adds space between title and nav buttons */
+.nav-spacer {
+  flex: 1 1 auto;
+}
+
+/* Product Card sizing and styling */
+mat-card.product-card {
+  width: 185px;
+  height: 300px;
+  padding: 35px;
+  box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation for hovering over cards */
+mat-card.product-card:hover  {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 4px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Spacing between each product card */
+div.container-fluid {
+  float: left;
+  margin: 20px 10px 10px 10px;
+}
+
+/* Centers the price and rating */
+mat-card-content {
+  text-align: center;
+}
+
+/* Styling for the price and rating */
+mat-card-content>p {
+  float: left;
+  width: 40%;
+  margin: 0 1%;
+  font-size: 15px;
+}
+
+/* Center "Add To Cart" Button  */
+div mat-card-actions button {
+  margin-top: 30px !important;
+  margin-left: 45px !important;
+}
+
+/* Sets the background color and text */
+body {
+  background-color: #f2f2f2;
+  text-decoration-color: black;
+}
+
+/* Defines the constraints for the main display */
+section {
+  /* top: 0; */
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 100%;
+  width: 75%;
+  max-width: 90%;
+  margin: 60px auto;
+  padding: 15px 0;
+}
+
+#navbar {
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  padding: 0% 5% 0% 5%;
+  background-color: #fff;
+  z-index: 1;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2), 0 0 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Sizing for the thumbnail product image */
+.product-sm-image {
+  height: 130px;
+  width: 130px;
+}
+
+/* Expanding the search field to 100% */
+.search-full-width {
+  width: 100%;
+}
+
+/* Making the cart icon clickable */
+#cart-icon {
+  cursor: pointer;
+}
+
+#store-name {
+  font-size: 20px;
+}
