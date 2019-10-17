@@ -7,6 +7,7 @@ import { IProduct } from '../product';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
+  pageTitle: string = "All Products";
   products: IProduct[] = [
     {
       productId: 1,
