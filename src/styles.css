@@ -182,3 +182,30 @@ mat-button-toggle {
 .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
   background-color: rgb(255, 37, 37, .26)
 }
+
+/* Hyperlink */
+
+a {
+  cursor: pointer;
+  color: #3a3f44;
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* Cart Item Styling */
+
+.cart-item {
+  width: 100%;
+  min-width: 400px;
+  max-width: 450px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 16px 32px;
+  margin-bottom: 8px;
+  border-radius: 2px;
+  background-color: white;
+}

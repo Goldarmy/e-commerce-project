@@ -32,14 +32,15 @@
     <div class="container-fluid" *ngFor='let product of products'>
         <mat-card class="product-card" [class.mat-elevation-z2]=true>
             <img mat-card-image sty [src]='product.smImagePath' [alt]='product.description' class="product-sm-image">
-            <mat-card-title style="font-size: 18px; text-align: center;">{{ product.title }}</mat-card-title>
+            <mat-card-title style="font-size: 18px; text-align: center;"><a
+                    [routerLink]="['/product', product.productId]">{{ product.title }}</a></mat-card-title>
             <mat-card-subtitle style="text-align: center;">{{ product.description }}</mat-card-subtitle>
             <mat-card-content>
                 <p>{{ product.price | currency }}</p>
                 <p>Rating: 3/5</p>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-raised-button>ADD TO CART</button>
+                <button mat-raised-button (click)="addToCart(product)">ADD TO CART</button>
             </mat-card-actions>
         </mat-card>
     </div>

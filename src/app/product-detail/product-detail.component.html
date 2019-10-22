@@ -1,0 +1,26 @@
+<div class="header">
+    <p class="mat-h1">{{ pageTitle }}</p>
+</div>
+
+<mat-card style="height: 300px;" *ngIf='product'>
+    <img mat-card-image sty [src]='product.smImagePath' [alt]='product.description'
+        style="float:left; width: 30%; padding: 50px">
+
+    <div>
+        <mat-card-header>
+            <h1>{{product.title}}</h1>
+        </mat-card-header>
+
+        <div class="mat-body-1" style="float:left; margin-left:5%; width: 40%; font-size: 20px; line-height: 30px;">
+            <p><strong>Name:</strong> {{product.title}}</p>
+
+            <p><strong>Description:</strong> {{product.description}}</p>
+
+            <p><strong>Price:</strong> {{product.price | currency}}</p>
+        </div>
+        <mat-card-actions>
+            <button mat-raised-button (click)='onBack()'>Back</button>
+        </mat-card-actions>
+
+    </div>
+</mat-card>

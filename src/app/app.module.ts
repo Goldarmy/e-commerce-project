@@ -8,15 +8,26 @@ import { MaterialModule } from './material/material.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { DialogComponent } from './dialog/dialog.component';
+import { FormsModule } from '@angular/forms';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     WelcomeComponent,
-    ProductListComponent
+    ProductListComponent,
+    DialogComponent,
+    ProductDetailComponent,
+    CheckoutComponent
+  ],
+  entryComponents: [
+    DialogComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
