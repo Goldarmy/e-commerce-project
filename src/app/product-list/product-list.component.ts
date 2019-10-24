@@ -13,11 +13,27 @@ import { DialogComponent } from '../dialog/dialog.component';
 export class ProductListComponent implements OnInit {
   pageTitle: string = "All Products";
   products: IProduct[] = [];
+  filteredProducts: IProduct[] = [];
 
   constructor(private productService: ProductService, private cartService: CartService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.products = this.productService.getProducts();
+    this.products = this.filteredProducts = this.productService.getProducts();
+  }
+
+  _listFilter: string;
+  get listFilter(): string {
+    return this._listFilter;
+  }
+  set listFilter(value: string){
+    this._listFilter = value;
+    this.filteredProducts =  this.listFilter ? this.performFilter(this.listFilter) : this.products;
+  }
+
+  performFilter(filterBy: string): IProduct[] {
+    filterBy = filterBy.toLowerCase();
+    return this.products.filter((product: IProduct) =>
+      product.title.toLowerCase().indexOf(filterBy) !== -1);
   }
 
   openDialog(data): void {

@@ -2,11 +2,15 @@
     <p class="mat-h1">{{ pageTitle }}</p>
     <form class="example-form">
         <mat-form-field class="search-full-width">
-            <input matInput type="search" placeholder="Search" value="">
+            <input matInput type="search" placeholder="Search" value="" name="searchbox" [(ngModel)]='listFilter'>
         </mat-form-field>
     </form>
 </div>
-
+<div class='row'>
+    <div class='col-md-6'>
+        <h4>Filtered by: {{ listFilter }}</h4>
+    </div>
+</div>
 <section class="sidebar">
     <p class="mat-h2">Gender</p>
     <mat-button-toggle-group vertical appearance="legacy" name="fontStyle" aria-label="Font Style">
@@ -29,7 +33,7 @@
 </section>
 
 <section class="product_list">
-    <div class="container-fluid" *ngFor='let product of products'>
+    <div class="container-fluid" *ngFor='let product of filteredProducts'>
         <mat-card class="product-card" [class.mat-elevation-z2]=true>
             <img mat-card-image sty [src]='product.smImagePath' [alt]='product.description' class="product-sm-image">
             <mat-card-title style="font-size: 18px; text-align: center;"><a
