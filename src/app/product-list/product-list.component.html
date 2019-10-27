@@ -13,23 +13,25 @@
 </div>
 <section class="sidebar">
     <p class="mat-h2">Gender</p>
-    <mat-button-toggle-group vertical appearance="legacy" name="fontStyle" aria-label="Font Style">
-        <mat-button-toggle value="male">Male</mat-button-toggle>
-        <mat-button-toggle value="female">Female</mat-button-toggle>
+    <mat-button-toggle-group vertical [(ngModel)]="genderFilter" appearance="legacy" name="fontStyle"
+        aria-label="Font Style">
+        <mat-button-toggle value="Male">Male</mat-button-toggle>
+        <mat-button-toggle value="Female">Female</mat-button-toggle>
+        <mat-button-toggle value="All">All</mat-button-toggle>
     </mat-button-toggle-group>
-    <mat-divider style="margin: 15px;"></mat-divider>
 
+    <div style="margin-top: 5px;">Selected Gender: <strong>{{genderFilter}}</strong></div>
+    <mat-divider style="margin: 15px;"></mat-divider>
     <p class="mat-h2">Price</p>
     <label>Select a price range:</label>
-    <mat-radio-group aria-labelledby="radio-group-label" class="radio-group">
-        <mat-radio-button class="radio-button" value="1">Under $25</mat-radio-button>
-        <mat-radio-button class="radio-button" value="2">$25 to $50</mat-radio-button>
-        <mat-radio-button class="radio-button" value="3">$50 to $100</mat-radio-button>
-        <mat-radio-button class="radio-button" value="4">$100 to $200</mat-radio-button>
-        <mat-radio-button class="radio-button" value="5">$200 & Above</mat-radio-button>
-        <mat-radio-button class="radio-button" value="6">Any Price</mat-radio-button>
+    <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="priceFilter">
+        <mat-radio-button class="radio-button" *ngFor="let priceRange of priceRanges" [value]="priceRange.text">
+            {{priceRange.text}}
+        </mat-radio-button>
     </mat-radio-group>
-
+    <div>Selected Price Range: <strong>{{priceFilter}}</strong></div>
+    <mat-divider style="margin: 15px;"></mat-divider>
+    <button mat-raised-button (click)='clearFilter()'>Clear Filter(s)</button>
 </section>
 
 <section class="product_list">
