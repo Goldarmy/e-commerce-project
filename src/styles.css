@@ -209,3 +209,15 @@ a:hover {
   border-radius: 2px;
   background-color: white;
 }
+
+.review-container {
+  flex-direction: column;
+  clear: both;
+  background-color: white;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.review-container > * {
+  width: 95%;
+}

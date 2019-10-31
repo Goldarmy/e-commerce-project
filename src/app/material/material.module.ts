@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MatDialogModule, MatDividerModule, MatButtonToggleModule, MatRadioModule, MatInputModule, MatIconModule, MatBadgeModule, MatToolbarModule, MatMenuModule, MatCardModule, MatButtonModule } from '@angular/material';
+import { MatListModule, MatSelectModule, MatDialogModule, MatDividerModule, MatButtonToggleModule, MatRadioModule, MatInputModule, MatIconModule, MatBadgeModule, MatToolbarModule, MatMenuModule, MatCardModule, MatButtonModule } from '@angular/material';
 
 const MaterialComponents = [
   MatCardModule,
@@ -12,7 +12,9 @@ const MaterialComponents = [
   MatButtonToggleModule,
   MatRadioModule,
   MatDividerModule,
-  MatDialogModule
+  MatDialogModule,
+  MatSelectModule,
+  MatListModule
 ]
 
 @NgModule({
