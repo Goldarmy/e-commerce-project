@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IProduct } from '../product';
 import { CartService } from '../cart.service';
-import { ProductService } from '../product.service';
 import { IShoppingCartItem } from '../shopping-cart-item';
 
 @Component({
@@ -11,34 +10,22 @@ import { IShoppingCartItem } from '../shopping-cart-item';
 })
 export class ShoppingCartComponent implements OnInit {
   pageTitle: string = "Shopping Cart";
-  products: IProduct[] = [];
   shoppingCartitems: IShoppingCartItem[] = [];
   quantity: number[] = [
     1, 2, 3, 4, 5, 6, 7, 8, 9
   ];
-
-  constructor(private cartService: CartService, private productService: ProductService) { }
+  constructor(private cartService: CartService) { }
 
   ngOnInit() {
-    this.refreshData();
-  }
-
-  refreshData(): void {
-    this.products = [];
     this.shoppingCartitems = this.cartService.getItems();
-    this.shoppingCartitems.forEach(item => {
-      this.productService.getProduct(item.productId).subscribe(product => {
-        this.products.push(product);
-      })
-    })
   }
 
   removeProduct(id: number): void {
     this.cartService.removeItem(id);
-    this.refreshData();
+    this.shoppingCartitems = this.cartService.getItems();
   }
 
-  updateCart(event, product: IProduct): void {
+  updateCart(event, product: IProduct, i: number): void {
     this.cartService.updateCart(product, event.value);
   }
 

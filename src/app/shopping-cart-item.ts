@@ -1,4 +1,6 @@
+import { IProduct } from './product';
+
 export interface IShoppingCartItem {
-    productId: number;
-    quantity: number;
+        product: IProduct;
+        quantity: number;
 }

@@ -1,20 +1,19 @@
 <div class="header">
     <p class="mat-h1">{{ pageTitle }}</p>
 </div>
-<div *ngIf="products?.length > 0;else emptyCart">
-    <div class="cart-item" *ngFor="let product of products; let i=index">
-        <span>{{ product.title }}</span>
-        <span>{{ product.price * shoppingCartitems[i].quantity | currency }}</span>
-        <span>{{ shoppingCartitems[i].quantity }}</span>
+<div *ngIf="shoppingCartitems?.length > 0;else emptyCart">
+    <div class="cart-item" *ngFor="let item of shoppingCartitems; let i=index">
+        <span>{{ item.product.title }}</span>
+        <span>{{ item.product.price * item.quantity | currency }}</span>
+        <span>{{ item.quantity }}</span>
         <span>
-            <mat-select [(value)]="shoppingCartitems[i].quantity" name="quantity"
-                (selectionChange)="updateCart($event, product)">
+            <mat-select [(value)]="item.quantity" name="quantity" (selectionChange)="updateCart($event, item.product)">
                 <mat-option *ngFor="let s_quantity of quantity" [value]="s_quantity">
                     {{ s_quantity }}
                 </mat-option>
             </mat-select>
         </span>
-        <span><button mat-raised-button (click)="removeProduct(product.productId)">Delete</button></span>
+        <span><button mat-raised-button (click)="removeProduct(item.product.productId)">Delete</button></span>
     </div>
 </div>
 
