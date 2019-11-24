@@ -1,0 +1,27 @@
+<div class="header">
+    <p class="mat-h1">{{ pageTitle }}</p>
+</div>
+<div *ngIf="products?.length > 0;else emptyCart">
+    <div class="cart-item" *ngFor="let product of products; let i=index">
+        <span>{{ product.title }}</span>
+        <span>{{ product.price * shoppingCartitems[i].quantity | currency }}</span>
+        <span>{{ shoppingCartitems[i].quantity }}</span>
+        <span>
+            <mat-select [(value)]="shoppingCartitems[i].quantity" name="quantity"
+                (selectionChange)="updateCart($event, product)">
+                <mat-option *ngFor="let s_quantity of quantity" [value]="s_quantity">
+                    {{ s_quantity }}
+                </mat-option>
+            </mat-select>
+        </span>
+        <span><button mat-raised-button (click)="removeProduct(product.productId)">Delete</button></span>
+    </div>
+</div>
+
+<ng-template #emptyCart>
+    <div class="container">
+        <mat-card style="padding: 5%;">
+            <div class="mat-h1">There are not items in your Cart.</div>
+        </mat-card>
+    </div>
+</ng-template>

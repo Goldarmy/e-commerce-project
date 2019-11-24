@@ -5,11 +5,12 @@
     <a mat-button routerLink="products">Products</a>
     <a mat-button routerLink="">Login</a>
     <a mat-button routerLink="">Create Account</a>
-    <a mat-button routerLink="">Orders</a>
-    <mat-icon id="cart-icon" [matMenuTriggerFor]="menu" matBadge="{{cartItemCount}}" matBadgeColor="warn">shopping_cart</mat-icon>
+    <a mat-button routerLink="orders">Orders</a>
+    <mat-icon id="cart-icon" [matMenuTriggerFor]="menu" matBadge="{{cartItemCount}}" matBadgeColor="warn">shopping_cart
+    </mat-icon>
     <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="shoppingcart">Shopping Cart</button>
       <button mat-menu-item routerLink="checkout">Checkout</button>
-      <!-- <button mat-menu-item>Item 2</button> -->
     </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>

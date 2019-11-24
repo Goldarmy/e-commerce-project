@@ -19,11 +19,13 @@
             <p><strong>Price:</strong> {{product.price | currency}}</p>
         </div>
         <mat-card-actions>
+            <button mat-raised-button (click)="addToCart(product)">ADD TO CART</button>
             <button mat-raised-button (click)='onBack()'>Back</button>
         </mat-card-actions>
 
     </div>
 </mat-card>
+
 
 <div class="review-container">
     <mat-card-title>Leave a Review</mat-card-title>

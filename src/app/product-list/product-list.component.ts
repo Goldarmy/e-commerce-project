@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IProduct } from '../product';
 import { CartService } from '../cart.service';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
 import { ProductService } from '../product.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface PriceRange {
   text: string;
@@ -49,7 +48,7 @@ export class ProductListComponent implements OnInit {
       max: 1000000
     }]
 
-  constructor(private productService: ProductService, private cartService: CartService, public dialog: MatDialog) { }
+  constructor(private productService: ProductService, private cartService: CartService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     //this.products = this.filteredProducts = this.productService.getProducts();
@@ -125,19 +124,10 @@ export class ProductListComponent implements OnInit {
     this.genderFilter = 'All';
   }
 
-  openDialog(data): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '500px',
-      data: data
-    });
-
-  };
-
   addToCart(product: IProduct): void {
-    this.cartService.addToCart(product);
-    this.openDialog({
-      title: 'Cart',
-      message: `${product.title} has been added to your Cart. Would you like to continue shopping or checkout now?`
+    this.cartService.updateCart(product);
+    this._snackBar.open(`${product.title} has been added to your Cart.`, '', {
+      duration: 2000
     });
   }
 }

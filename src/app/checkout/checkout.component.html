@@ -2,7 +2,8 @@
     <p class="mat-h1">{{ pageTitle }}</p>
 </div>
 
-<div class="cart-item" *ngFor="let item of items">
-    <span>{{ item.title }}</span>
-    <span>{{ item.price | currency }}</span>
+<div class="cart-item" *ngFor="let product of products; let i=index">
+    <span>{{ product.title }}</span>
+    <span>{{ product.price * shoppingCartitems[i].quantity | currency }}</span>
+    <span>{{ shoppingCartitems[i].quantity }}</span>
 </div>

@@ -32,10 +32,6 @@ export class ReviewService {
 
   constructor() { }
 
-  // getReviews(): IReview[] {
-  //   return this.reviews;
-  // }
-
   getProductReviews(product: IProduct): IReview[] {
     return this.reviews.filter((review: IReview) => review.productId === product.productId);
   }

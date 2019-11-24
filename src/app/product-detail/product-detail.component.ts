@@ -5,6 +5,9 @@ import { ProductService } from '../product.service';
 import { ReviewService } from '../review.service';
 import { IReview } from '../review';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { CartService } from '../cart.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-product-detail',
@@ -28,7 +31,9 @@ export class ProductDetailComponent implements OnInit {
     private router: Router,
     private productService: ProductService,
     private reviewService: ReviewService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private cartService: CartService,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     let id = +this.route.snapshot.paramMap.get('id');
@@ -61,8 +66,9 @@ export class ProductDetailComponent implements OnInit {
 
   clearForm(): void {
     this.reviewForm.reset();
-    this.reviewForm.get('title').setValue(" ");
-    this.reviewForm.get('content').setValue(" ");
+    //this.reviewForm.get('title').setValue("");
+    //this.reviewForm.get('content').setValue("");
+    this.reviewForm.get('rating').setValue(5);
   }
 
   editReview($event, review): void{
@@ -84,6 +90,21 @@ export class ProductDetailComponent implements OnInit {
   clearState(): void {
     this.editState = false;
     this.reviewToEdit = null;
+  }
+
+  openDialog(data): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '500px',
+      data: data
+    });
+  }
+  
+  addToCart(product: IProduct): void {
+    this.cartService.updateCart(product);
+    this.openDialog({
+      title: 'Cart',
+      message: `${product.title} has been added to your Cart. Would you like to continue shopping or checkout now?`
+    });
   }
 
   onBack(): void {

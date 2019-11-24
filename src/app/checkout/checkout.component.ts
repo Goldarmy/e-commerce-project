@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { IProduct } from '../product';
 import { CartService } from '../cart.service';
+import { IProduct } from '../product';
+import { IShoppingCartItem } from '../shopping-cart-item';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-checkout',
@@ -8,14 +10,19 @@ import { CartService } from '../cart.service';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
-
   pageTitle: string = "Checkout";
-  items: IProduct[] = [];
-  
-  constructor(private cartService: CartService) { }
+  products: IProduct[] = [];
+  shoppingCartitems: IShoppingCartItem[] = [];
+  constructor(private cartService: CartService, private productService: ProductService) { }
 
   ngOnInit() {
-    this.items = this.cartService.getItems();
+    this.shoppingCartitems = this.cartService.getItems();
+    this.shoppingCartitems.forEach(item => {
+      this.productService.getProduct(item.productId).subscribe(product => {
+        this.products.push(product);
+      })
+    })
+
   }
 
 }
