@@ -2,25 +2,33 @@
     <p class="mat-h1">{{ pageTitle }}</p>
 </div>
 <div *ngIf="shoppingCartitems?.length > 0;else emptyCart">
-    <div class="cart-item" *ngFor="let item of shoppingCartitems; let i=index">
+    <div class="cart-item" *ngFor="let item of shoppingCartitems">
         <span>{{ item.product.title }}</span>
-        <span>{{ item.product.price * item.quantity | currency }}</span>
-        <span>{{ item.quantity }}</span>
+        <span>{{ item.product.price | currency }}</span>
         <span>
-            <mat-select [(value)]="item.quantity" name="quantity" (selectionChange)="updateCart($event, item.product)">
-                <mat-option *ngFor="let s_quantity of quantity" [value]="s_quantity">
-                    {{ s_quantity }}
-                </mat-option>
-            </mat-select>
+            <mat-form-field>
+                <mat-select [(value)]="item.quantity" name="quantity"
+                    (selectionChange)="updateCart($event, item.product)">
+                    <mat-option *ngFor="let s_quantity of quantity" [value]="s_quantity">
+                        {{ s_quantity }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </span>
-        <span><button mat-raised-button (click)="removeProduct(item.product.productId)">Delete</button></span>
+        <span><button mat-raised-button color="accent"
+                (click)="removeProduct(item.product.productId)">Delete</button></span>
+    </div>
+    <hr>
+    <div class="cart-item">
+        <span>Subtotal ({{ getShoppingCartQuantity() }} items):
+            <strong>{{ getShoppingCartTotal() | currency }}</strong></span>
     </div>
 </div>
 
 <ng-template #emptyCart>
     <div class="container">
         <mat-card style="padding: 5%;">
-            <div class="mat-h1">There are not items in your Cart.</div>
+            <div class="mat-h1">There are no items in your Cart.</div>
         </mat-card>
     </div>
 </ng-template>

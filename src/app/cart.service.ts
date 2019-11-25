@@ -19,17 +19,16 @@ export class CartService {
     this.itemCount.next(count);
   }
 
-  updateCart(product: IProduct, quanity?: number): void {
-    let existingItem = this.items.find(p => p.productId === product.productId)
+  updateCart(product: IProduct, quantity?: number): void {
+    let existingItem = this.items.find(p => p.product.productId === product.productId)
     if (existingItem) {
-      existingItem.quantity = (quanity) ? quanity : existingItem.quantity + 1;
+      existingItem.quantity = (quantity) ? quantity : existingItem.quantity + 1;
     } else {
       this.items.push({
-        productId: product.productId,
+        product: product,
         quantity: 1
       });
     }
-
     this.cartCountChange((this.items.length) ? this.items.map(this.quantity).reduce(this.sum) : 0);
   }
 
@@ -42,7 +41,7 @@ export class CartService {
   }
 
   removeItem(id: number) {
-    this.items = this.items.filter(item => item.productId !== id);
+    this.items = this.items.filter(item => item.product.productId !== id);
     this.cartCountChange((this.items.length) ? this.items.map(this.quantity).reduce(this.sum) : 0);
   }
 
@@ -53,5 +52,17 @@ export class CartService {
   clearCart() {
     this.items = [];
     return this.items;
+  }
+
+  getTotalCost(): number {
+    let totalCost = 0;
+    this.items.forEach(item => {
+      totalCost += item.product.price * item.quantity
+    })
+    return totalCost;
+  }
+
+  getItemCount(): number {
+    return (this.items.length) ? this.items.map(this.quantity).reduce(this.sum) : 0;
   }
 }

@@ -25,8 +25,15 @@ export class ShoppingCartComponent implements OnInit {
     this.shoppingCartitems = this.cartService.getItems();
   }
 
-  updateCart(event, product: IProduct, i: number): void {
+  updateCart(event, product: IProduct): void {
     this.cartService.updateCart(product, event.value);
   }
 
+  getShoppingCartTotal(): number {
+    return this.cartService.getTotalCost();
+  }
+
+  getShoppingCartQuantity(): number {
+    return this.cartService.getItemCount();
+  }
 }
