@@ -8,6 +8,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { CartService } from '../cart.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product-detail',
@@ -33,7 +34,8 @@ export class ProductDetailComponent implements OnInit {
     private reviewService: ReviewService,
     private fb: FormBuilder,
     private cartService: CartService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     let id = +this.route.snapshot.paramMap.get('id');
@@ -62,12 +64,13 @@ export class ProductDetailComponent implements OnInit {
 
     this.reviews = this.reviewService.getProductReviews(this.product);
     this.clearForm();
+    this._snackBar.open('New review added!', '', {
+      duration: 2000
+    });
   }
 
   clearForm(): void {
     this.reviewForm.reset();
-    //this.reviewForm.get('title').setValue("");
-    //this.reviewForm.get('content').setValue("");
     this.reviewForm.get('rating').setValue(5);
   }
 

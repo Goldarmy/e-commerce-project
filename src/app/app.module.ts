@@ -15,6 +15,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { HttpClientModule } from '@angular/common/http';
 import { OrdersComponent } from './orders/orders.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
     ProductDetailComponent,
     CheckoutComponent,
     OrdersComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    LoginComponent
   ],
   entryComponents: [
     DialogComponent

@@ -25,7 +25,7 @@ mat-card.product-card:hover {
 
 div.container-fluid {
   float: left;
-  margin: 20px 5px 10px 5px;
+  margin: 20px 10px 10px 10px;
 }
 
 /* Centers the price and rating */
@@ -68,6 +68,7 @@ body {
   width: 80%;
   margin: 15px auto 0 auto;
   overflow: hidden;
+  padding-bottom: 20px;
 }
 
 /* Defines the constraints for header within subpage */
@@ -143,15 +144,15 @@ mat-button-toggle-group {
 /* Gender radio buttons styling */
 
 mat-button-toggle {
-  padding: 5px;
+  /* padding: 5px; */
   margin: 5px;
   background-color: white;
   color: black !important;
-  flex: 1 1 100%;
+  /* flex: 1 1 100%;
   box-sizing: border-box;
   align-items: center;
   flex-direction: row;
-  display: flex;
+  display: flex; */
 }
 
 /* Constrains for radio button group */
@@ -159,7 +160,7 @@ mat-button-toggle {
 .radio-group {
   display: flex;
   flex-direction: column;
-  margin: 15px F;
+  margin: 15px;
 }
 
 /* Radio Button margin */
@@ -220,4 +221,25 @@ a:hover {
 
 .review-container > * {
   width: 95%;
+}
+
+.review {
+  background-color: white;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.login-div {
+  display: flex;
+  width: 50%;
+  margin: auto;
+  justify-content: center;
+  background-color: white;
+  padding: 5%;
+  border-radius: 5px;
+  box-shadow:  5px 5px 15px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login-div mat-form-field {
+  width: 500px;
 }
