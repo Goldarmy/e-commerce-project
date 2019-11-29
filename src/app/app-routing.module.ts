@@ -7,11 +7,13 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { OrdersComponent } from './orders/orders.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'products', component: ProductListComponent },
   { path: 'shoppingcart', component: ShoppingCartComponent },
   { path: 'checkout', component: CheckoutComponent },
