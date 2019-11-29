@@ -12,7 +12,7 @@
                     <div *ngIf="f.email.errors.required">Email is required</div>
                     <div *ngIf="f.email.errors.email">Invalid email format</div>
                 </mat-error>
-                <mat-icon matSuffix>person</mat-icon>
+                <mat-icon matSuffix>mail</mat-icon>
             </mat-form-field>
         </p>
         <p>
@@ -30,7 +30,7 @@
             <button mat-raised-button style="margin-right: 30px;"
                 [title]="loginForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
                 [disabled]="!loginForm.valid">Login</button>
-            <strong><a routerLink="" mat-button color="primary">Register</a></strong>
+            <strong><a routerLink="/register" mat-button color="primary">Register</a></strong>
         </p>
 
     </form>
