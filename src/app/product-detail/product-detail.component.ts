@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { IProduct } from '../product';
+import { IProduct } from '../models/product';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from '../product.service';
-import { ReviewService } from '../review.service';
-import { IReview } from '../review';
+import { ProductService } from '../services/product.service';
+import { ReviewService } from '../services/review.service';
+import { IReview } from '../models/review';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { CartService } from '../cart.service';
+import { CartService } from '../services/cart.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';

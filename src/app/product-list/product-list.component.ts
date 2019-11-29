@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IProduct } from '../product';
-import { CartService } from '../cart.service';
-import { ProductService } from '../product.service';
+import { IProduct } from '../models/product';
+import { CartService } from '../services/cart.service';
+import { ProductService } from '../services/product.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface PriceRange {

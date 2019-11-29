@@ -1,16 +1,21 @@
 <mat-toolbar id="navbar">
   <mat-toolbar-row>
-    <a mat-button routerLink="welcome"><span id="store-name">Store</span></a>
-    <span class="nav-spacer"></span>
-    <a mat-button routerLink="products">Products</a>
-    <a mat-button routerLink="login">Login</a>
-    <a mat-button routerLink="">Create Account</a>
-    <a mat-button routerLink="orders">Orders</a>
-    <mat-icon id="cart-icon" [matMenuTriggerFor]="menu" matBadge="{{cartItemCount}}" matBadgeColor="warn">shopping_cart
-    </mat-icon>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item routerLink="shoppingcart">Shopping Cart</button>
-      <button mat-menu-item routerLink="checkout">Checkout</button>
-    </mat-menu>
+      <a mat-button routerLink="welcome"><span id="store-name">Store</span></a>
+      <span class="nav-spacer"></span>
+      <a mat-button routerLink="products">Products</a>
+      <div *ngIf="currentUser else notLoggedIn">
+          <a mat-button routerLink="orders">Orders</a>
+          <a mat-button (click)="logout()">Logout</a>
+      </div>
+      <ng-template #notLoggedIn>
+          <a mat-button routerLink="login">Login</a>
+      </ng-template>
+      <a mat-button routerLink="">Create Account</a>
+      <mat-icon id="cart-icon" [matMenuTriggerFor]="menu" matBadge={{cartItemCount}} matBadgeColor="warn">
+          shopping_cart</mat-icon>
+      <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLink="shoppingcart">Shopping Cart</button>
+          <button mat-menu-item routerLink="checkout">Checkout</button>
+      </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>

@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { CartService } from '../cart.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { CartService } from '../services/cart.service';
+import { AuthenticationService } from '../services/authentication.service';
+import { IUser } from '../models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -8,12 +11,18 @@ import { CartService } from '../cart.service';
 })
 export class NavbarComponent implements OnInit {
 
-  cartItemCount: number = 0;
+  @Input() cartItemCount: number = 0;
+  currentUser: IUser;
 
-  constructor(private cartService: CartService) { }
+  constructor(private router: Router, private cartService: CartService, private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.cartService.currentItemCount.subscribe(count => this.cartItemCount = count);
   }
-
+  
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
+}
 }
