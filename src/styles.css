@@ -229,7 +229,7 @@ a:hover {
   border-radius: 5px;
 }
 
-.login-div {
+.login-div, .register-div{
   display: flex;
   width: 50%;
   margin: auto;
@@ -237,9 +237,9 @@ a:hover {
   background-color: white;
   padding: 5%;
   border-radius: 5px;
-  box-shadow:  5px 5px 15px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.1);
 }
 
-.login-div mat-form-field {
+.login-div mat-form-field, .register-div mat-form-field {
   width: 500px;
 }
