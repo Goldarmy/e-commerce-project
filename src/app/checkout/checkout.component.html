@@ -1,9 +1,36 @@
 <div class="header">
     <p class="mat-h1">{{ pageTitle }}</p>
 </div>
-
-<div class="cart-item" *ngFor="let item of shoppingCartitems">
-    <span>{{ item.product.title }}</span>
-    <span>{{ item.product.price * item.quantity | currency }}</span>
-    <span>{{ item.quantity }}</span>
+<div class="checkout" *ngIf="shoppingCartitems?.length > 0;else emptyCart">
+    <div class="checkout-list">
+        <div class="mat-h2">Review Your Order</div>
+        <div class="checkout-item" *ngFor="let item of shoppingCartitems">
+            <span>{{ item.product.title }}</span>
+            <span>{{ item.product.price * item.quantity | currency }}</span>
+            <span>{{ item.quantity }}</span>
+        </div>
+    </div>
+    <div class="checkout-summary">
+        <div class="mat-h2">Choose a delivery option:</div>
+        <mat-radio-group aria-label="Select an option">
+            <mat-radio-button style="margin: 2%;" value="1">Free Shipping (5-8 business days)</mat-radio-button>
+            <mat-radio-button style="margin: 2%;" value="2">Standard Shipping (4-5 business days) </mat-radio-button>
+        </mat-radio-group>
+        <div class="mat-h2" style="margin-top: 2%;">Order Summary</div>
+        <mat-divider></mat-divider>
+        <div class="mat-h4">Items ( {{ getShoppingCartQuantity() }} ) {{ getShoppingCartTotal() | currency }}</div>
+        <div class="mat-h4">Shipping and handling: $0.00</div>
+        <div class="mat-h4">Estimated tax to be collected: $0.00</div>
+        <mat-divider></mat-divider>
+        <div class="mat-h3">Order Total: $0.00</div>
+        <button mat-raised-button color="primary">Pay with Card</button>
+    </div>
 </div>
+
+<ng-template #emptyCart>
+    <div class="container">
+        <mat-card style="padding: 5%;">
+            <div class="mat-h1">There are no items in your Cart to Checkout.</div>
+        </mat-card>
+    </div>
+</ng-template>

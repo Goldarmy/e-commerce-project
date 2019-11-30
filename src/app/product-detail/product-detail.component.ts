@@ -9,6 +9,7 @@ import { CartService } from '../services/cart.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthGuard } from '../auth.guard';
 
 @Component({
   selector: 'app-product-detail',
@@ -25,7 +26,7 @@ export class ProductDetailComponent implements OnInit {
   reviewToEdit: IReview;
   editState: boolean = false;
   ratings: number[] = [
-    1,2,3,4,5
+    1, 2, 3, 4, 5
   ];
 
   constructor(private route: ActivatedRoute,
@@ -35,7 +36,8 @@ export class ProductDetailComponent implements OnInit {
     private fb: FormBuilder,
     private cartService: CartService,
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar) { }
+    private _snackBar: MatSnackBar,
+    private authGuard: AuthGuard) { }
 
   ngOnInit() {
     let id = +this.route.snapshot.paramMap.get('id');
@@ -74,17 +76,17 @@ export class ProductDetailComponent implements OnInit {
     this.reviewForm.get('rating').setValue(5);
   }
 
-  editReview($event, review): void{
+  editReview($event, review): void {
     this.editState = true;
     this.reviewToEdit = review;
   }
 
-  updateReview(review): void{
+  updateReview(review): void {
     this.reviewService.updateReview(review);
     this.clearState();
   }
 
-  deleteReview(review: IReview){
+  deleteReview(review: IReview) {
     this.reviewService.deleteReview(review);
     this.clearState();
     this.reviews = this.reviewService.getProductReviews(this.product);
@@ -101,13 +103,15 @@ export class ProductDetailComponent implements OnInit {
       data: data
     });
   }
-  
+
   addToCart(product: IProduct): void {
-    this.cartService.updateCart(product);
-    this.openDialog({
-      title: 'Cart',
-      message: `${product.title} has been added to your Cart. Would you like to continue shopping or checkout now?`
-    });
+    if (this.authGuard.canActivate(this.route.snapshot, this.router.routerState.snapshot)) {
+      this.cartService.updateCart(product);
+      this.openDialog({
+        title: 'Cart',
+        message: `${product.title} has been added to your Cart. Would you like to continue shopping or checkout now?`
+      });
+    }
   }
 
   onBack(): void {

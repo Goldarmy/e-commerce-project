@@ -3,6 +3,8 @@ import { IProduct } from '../models/product';
 import { CartService } from '../services/cart.service';
 import { ProductService } from '../services/product.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthGuard } from '../auth.guard';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export interface PriceRange {
   text: string;
@@ -48,7 +50,12 @@ export class ProductListComponent implements OnInit {
       max: 1000000
     }]
 
-  constructor(private productService: ProductService, private cartService: CartService, private _snackBar: MatSnackBar) { }
+  constructor(private productService: ProductService, 
+    private cartService: CartService, 
+    private _snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authGuard: AuthGuard) { }
 
   ngOnInit() {
     //this.products = this.filteredProducts = this.productService.getProducts();
@@ -125,9 +132,11 @@ export class ProductListComponent implements OnInit {
   }
 
   addToCart(product: IProduct): void {
-    this.cartService.updateCart(product);
-    this._snackBar.open(`${product.title} has been added to your Cart.`, '', {
-      duration: 2000
-    });
+    if (this.authGuard.canActivate(this.route.snapshot, this.router.routerState.snapshot)) {
+      this.cartService.updateCart(product);
+      this._snackBar.open(`${product.title} has been added to your Cart.`, '', {
+        duration: 2000
+      });
+    }
   }
 }

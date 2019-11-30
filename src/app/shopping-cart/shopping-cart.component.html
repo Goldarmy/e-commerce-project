@@ -1,7 +1,7 @@
 <div class="header">
     <p class="mat-h1">{{ pageTitle }}</p>
 </div>
-<div *ngIf="shoppingCartitems?.length > 0;else emptyCart">
+<div class="shopping-cart" *ngIf="shoppingCartitems?.length > 0;else emptyCart">
     <div class="cart-item" *ngFor="let item of shoppingCartitems">
         <span>{{ item.product.title }}</span>
         <span>{{ item.product.price | currency }}</span>

@@ -17,4 +17,11 @@ export class CheckoutComponent implements OnInit {
     this.shoppingCartitems = this.cartService.getItems();
   }
 
+  getShoppingCartTotal(): number {
+    return this.cartService.getTotalCost();
+  }
+
+  getShoppingCartQuantity(): number {
+    return this.cartService.getItemCount();
+  }
 }
