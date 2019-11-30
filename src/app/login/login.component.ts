@@ -13,8 +13,6 @@ import { first } from 'rxjs/operators';
 export class LoginComponent implements OnInit {
   pageTitle: string = "Login";
   loginForm: FormGroup;
-  loading = false;
-  submitted = false;
   returnUrl: string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar, private authenticationService: AuthenticationService) {
@@ -22,7 +20,7 @@ export class LoginComponent implements OnInit {
       //if logged in go to welcome page
       this.router.navigate(['/']);
     }
-    this.returnUrl = localStorage.getItem("redirectURL") ? localStorage.getItem("redirectURL") : '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   ngOnInit() {

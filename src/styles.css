@@ -125,8 +125,13 @@ body {
 
 /* Making the cart icon clickable */
 
-#cart-icon {
+#cart-icon, #person-icon {
   cursor: pointer;
+}
+
+.with-icon {
+  display: flex;
+  align-items: center;
 }
 
 /* Increase the font size of Store name */

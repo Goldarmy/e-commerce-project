@@ -51,6 +51,7 @@ export class CartService {
 
   clearCart() {
     this.items = [];
+    this.cartCountChange(0);
     return this.items;
   }
 

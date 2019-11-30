@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
   
   logout() {
     this.authenticationService.logout();
+    this.cartService.clearCart();
     this.router.navigate(['/login']);
 }
 }

@@ -43,7 +43,6 @@ export class AuthenticationService {
 
     // get user details and store user details in local storage
     return this.http.get<IUser>(`${environment.apiUrl}/users/me`, options).pipe(map(user => {
-      console.log("In post user: ", user);
       if (user) {
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
