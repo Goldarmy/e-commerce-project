@@ -45,7 +45,7 @@ export class ProductDetailComponent implements OnInit {
     this.productService.getProduct(id).subscribe({
       next: product => {
         this.product = product;
-        this.reviews = this.reviewService.getProductReviews(this.product);
+        this.reviews = product.reviews;
       },
       error: err => this.errorMessage = err
     });
@@ -59,16 +59,21 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addReview(): void {
-    this.reviewService.addReview(this.product.productId,
+    this.reviewService.addReview(this.product.id,
       this.reviewForm.get('title').value,
       this.reviewForm.get('content').value,
       this.reviewForm.get('rating').value);
 
-    this.reviews = this.reviewService.getProductReviews(this.product);
-    this.clearForm();
-    this._snackBar.open('New review added!', '', {
-      duration: 2000
-    });
+    this.reviewService.getProductReviews(this.product.id).subscribe(
+      (reviews) => {
+        if(reviews)
+          this.clearForm();
+          this._snackBar.open('New review added!', '', {
+            duration: 2000
+          });
+      }
+    )
+
   }
 
   clearForm(): void {
@@ -81,15 +86,27 @@ export class ProductDetailComponent implements OnInit {
     this.reviewToEdit = review;
   }
 
-  updateReview(review): void {
-    this.reviewService.updateReview(review);
+  updateReview(review: IReview): void {
+    this.reviewService.updateReview(this.product.id,
+      review.id,
+      review.title,
+      review.body,
+      review.rating);
     this.clearState();
   }
 
   deleteReview(review: IReview) {
-    this.reviewService.deleteReview(review);
+    this.reviewService.deleteReview(this.product.id, review.id);
     this.clearState();
-    this.reviews = this.reviewService.getProductReviews(this.product);
+    this.reviewService.getProductReviews(this.product.id).subscribe(
+      (reviews) => {
+        if(reviews)
+          this.clearForm();
+          this._snackBar.open('Review deleted!', '', {
+            duration: 2000
+          });
+      }
+    )
   }
 
   clearState(): void {

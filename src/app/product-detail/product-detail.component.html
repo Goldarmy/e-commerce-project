@@ -3,7 +3,7 @@
 </div>
 
 <mat-card style="height: 300px;" *ngIf='product'>
-    <img mat-card-image sty [src]='product.smImagePath' [alt]='product.description'
+    <img mat-card-image sty [src]='product.small_image_path' [alt]='product.description'
         style="float:left; width: 30%; padding: 50px">
 
     <div>
@@ -19,7 +19,7 @@
             <p><strong>Price:</strong> {{product.price | currency}}</p>
         </div>
         <mat-card-actions>
-            <button mat-raised-button (click)="addToCart(product)">ADD TO CART</button>
+            <button mat-raised-button (click)="addToCart(product)">Add To Cart</button>
             <button mat-raised-button (click)='onBack()'>Back</button>
         </mat-card-actions>
 
@@ -76,7 +76,7 @@
 
         <p>{{ review.body }}</p>
         <mat-divider></mat-divider>
-        <div *ngIf="editState && reviewToEdit.reviewId == review.reviewId">
+        <div *ngIf="editState && reviewToEdit.id == review.id">
             <form style="margin: 20px;">
                 <mat-form-field>
                     <mat-label>Rating</mat-label>

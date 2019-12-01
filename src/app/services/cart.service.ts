@@ -20,7 +20,7 @@ export class CartService {
   }
 
   updateCart(product: IProduct, quantity?: number): void {
-    let existingItem = this.items.find(p => p.product.productId === product.productId)
+    let existingItem = this.items.find(p => p.product.id === product.id)
     if (existingItem) {
       existingItem.quantity = (quantity) ? quantity : existingItem.quantity + 1;
     } else {
@@ -41,7 +41,7 @@ export class CartService {
   }
 
   removeItem(id: number) {
-    this.items = this.items.filter(item => item.product.productId !== id);
+    this.items = this.items.filter(item => item.product.id !== id);
     this.cartCountChange((this.items.length) ? this.items.map(this.quantity).reduce(this.sum) : 0);
   }
 

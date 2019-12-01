@@ -1,11 +1,14 @@
+import { IReview } from './review';
+
 export interface IProduct {
-    productId: number;
+    id: number;
     categoryId: number;
     title: string;
     description: string;
     price: number;
-    smImagePath: string;
-    lgImagePath: string;
-    createdDate: string;
-    updatedDate: string;
+    small_image_path: string;
+    large_image_path: string;
+    createdAt: string;
+    updatedAt: string;
+    reviews: IReview[];
 }

@@ -3,26 +3,24 @@ import { IProduct } from '../models/product';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators'
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private productUrl = 'api/products/products.json';
-
   constructor(private http: HttpClient) { }
 
   getProduct(id: number): Observable<IProduct | undefined> {
-    //return this.getProducts().find(product => product.productId === id);
     return this.getProducts()
       .pipe(
-        map((products: IProduct[]) => products.find(p => p.productId === id))
+        map((products: IProduct[]) => products.find(p => p.id === id))
       );
   }
 
   getProducts(): Observable<IProduct[]> {
-    return this.http.get<IProduct[]>(this.productUrl).pipe(
+    return this.http.get<IProduct[]>(`${environment.apiUrl}/products`).pipe(
       catchError(this.handleError)
     );
   }

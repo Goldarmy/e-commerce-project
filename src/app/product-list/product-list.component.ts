@@ -20,6 +20,7 @@ export interface PriceRange {
 export class ProductListComponent implements OnInit {
 
   pageTitle: string = "All Products";
+  loading: boolean = true;
   errorMessage: string;
   products: IProduct[] = [];
   filteredProducts: IProduct[] = [];
@@ -50,19 +51,21 @@ export class ProductListComponent implements OnInit {
       max: 1000000
     }]
 
-  constructor(private productService: ProductService, 
-    private cartService: CartService, 
+  constructor(private productService: ProductService,
+    private cartService: CartService,
     private _snackBar: MatSnackBar,
+    private authGuard: AuthGuard,
     private route: ActivatedRoute,
-    private router: Router,
-    private authGuard: AuthGuard) { }
+    private router: Router) { }
 
   ngOnInit() {
     //this.products = this.filteredProducts = this.productService.getProducts();
+    this.loading = true;
     this.productService.getProducts().subscribe(
       products => {
         this.products = products;
         this.filteredProducts = this.products;
+        this.loading = false;
       },
       error => this.errorMessage = <any>error   // this is casting
     );

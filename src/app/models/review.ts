@@ -1,10 +1,10 @@
 export interface IReview {
-    reviewId: number;
+    id: number;
     userId: number;
     productId: number;
     title: string;
     body: string;
     rating: number;
-    createdDate: string;
-    updatedDate: string;
+    createdAt: string;
+    updatedAt: string;
 }
