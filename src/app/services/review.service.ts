@@ -6,11 +6,13 @@ import { environment } from 'src/environments/environment.prod';
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { map } from 'rxjs/internal/operators/map';
 import { throwError } from 'rxjs/internal/observable/throwError';
+import { Observable } from 'rxjs/internal/Observable';
+import { tap } from 'rxjs/internal/operators/tap';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ReviewService implements OnInit{
+export class ReviewService implements OnInit {
 
   reviews: IReview[] = [];
   product: IProduct;
@@ -20,45 +22,51 @@ export class ReviewService implements OnInit{
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+  }
+
+  getProductReviews(productId: number): Observable<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'x-auth-token': localStorage.getItem('currentToken')
     });
     this.options = { headers: headers };
+    return this.http.get<IReview[]>(`${environment.apiUrl}/products/${productId}/reviews`, this.options)
+      .pipe(tap(data => data),
+        catchError(this.handleError)
+      );
   }
 
-  getProductReviews(productId: number) {
-    return this.http.get<IReview[]>(`${environment.apiUrl}/${productId}/reviews`, this.options)
-    .pipe(
-      catchError(this.handleError)
-    );
-  }
-  
-  addReview(productId: number, title: string, body: string, rating: number) {
-    return this.http.post<any>(`${environment.apiUrl}/${productId}/reviews`, { title, body, rating }, this.options)
-    .pipe(map(review => {
-      if (review) {
-        return review;
-      }
-    }));
+  addReview(productId: number, title: string, body: string, rating: number): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-auth-token': localStorage.getItem('currentToken')
+    });
+    this.options = { headers: headers };
+    return this.http.post<IReview>(`${environment.apiUrl}/products/${productId}/reviews`, { title, body, rating }, this.options)
+      .pipe(tap(data => data),
+        catchError(this.handleError));
   }
 
-  deleteReview(productId: number,reviewId: number) {
-    return this.http.delete<any>(`${environment.apiUrl}/${productId}/reviews/${reviewId}`, this.options)
-    .pipe(map(review => {
-      if (review) {
-        return review;
-      }
-    }));
+  deleteReview(productId: number, reviewId: number): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-auth-token': localStorage.getItem('currentToken')
+    });
+    this.options = { headers: headers };
+    return this.http.delete<any>(`${environment.apiUrl}/products/${productId}/reviews/${reviewId}`, this.options)
+      .pipe(tap(data => data),
+        catchError(this.handleError));
   }
 
-  updateReview(productId: number, reviewId: number, title:string, body: string, rating: number) {
-    return this.http.put<any>(`${environment.apiUrl}/${productId}/reviews/${reviewId}`, { title, body, rating })
-    .pipe(map(review => {
-      if (review) {
-        return review;
-      }
-    }));
+  updateReview(productId: number, reviewId: number, title: string, body: string, rating: number): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-auth-token': localStorage.getItem('currentToken')
+    });
+    this.options = { headers: headers };
+    return this.http.put<any>(`${environment.apiUrl}/products/${productId}/reviews/${reviewId}`, { title, body, rating }, this.options)
+      .pipe(tap(data => data),
+        catchError(this.handleError));
   }
 
   getDate(): string {

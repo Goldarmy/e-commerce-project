@@ -10,6 +10,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthGuard } from '../auth.guard';
+import { AuthenticationService } from '../services/authentication.service';
+import { IUser } from '../models/user';
 
 @Component({
   selector: 'app-product-detail',
@@ -18,6 +20,7 @@ import { AuthGuard } from '../auth.guard';
 })
 export class ProductDetailComponent implements OnInit {
   pageTitle: string = "Product Details";
+  currentUser: IUser;
   product: IProduct;
   errorMessage: string;
   reviewForm: FormGroup;
@@ -37,9 +40,11 @@ export class ProductDetailComponent implements OnInit {
     private cartService: CartService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private authGuard: AuthGuard) { }
+    private authGuard: AuthGuard,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     let id = +this.route.snapshot.paramMap.get('id');
 
     this.productService.getProduct(id).subscribe({
@@ -59,21 +64,22 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addReview(): void {
-    this.reviewService.addReview(this.product.id,
-      this.reviewForm.get('title').value,
-      this.reviewForm.get('content').value,
-      this.reviewForm.get('rating').value);
-
-    this.reviewService.getProductReviews(this.product.id).subscribe(
-      (reviews) => {
-        if(reviews)
-          this.clearForm();
-          this._snackBar.open('New review added!', '', {
-            duration: 2000
-          });
-      }
-    )
-
+    if (this.authGuard.canActivate(this.route.snapshot, this.router.routerState.snapshot)) {
+      this.reviewService.addReview(this.product.id,
+        this.reviewForm.get('title').value,
+        this.reviewForm.get('content').value,
+        this.reviewForm.get('rating').value).subscribe(review => {
+          this.reviewService.getProductReviews(this.product.id).subscribe(
+            (reviews) => {
+              this.reviews = reviews as IReview[];
+              this.clearForm();
+              this._snackBar.open('New review added!', '', {
+                duration: 2000
+              });
+            }
+          )
+        })
+    }
   }
 
   clearForm(): void {
@@ -87,26 +93,32 @@ export class ProductDetailComponent implements OnInit {
   }
 
   updateReview(review: IReview): void {
-    this.reviewService.updateReview(this.product.id,
-      review.id,
-      review.title,
-      review.body,
-      review.rating);
-    this.clearState();
+    let updatedReview;
+    this.reviewService.updateReview(this.product.id, review.id, review.title, review.body, review.rating)
+      .subscribe((review) =>
+        this.reviewService.getProductReviews(this.product.id).subscribe(
+          (reviews) => {
+            this.reviews = reviews as IReview[];
+            this.clearState();
+            this._snackBar.open('Review updated!', '', {
+              duration: 2000
+            });
+          }
+        )
+      )
   }
 
   deleteReview(review: IReview) {
-    this.reviewService.deleteReview(this.product.id, review.id);
-    this.clearState();
-    this.reviewService.getProductReviews(this.product.id).subscribe(
-      (reviews) => {
-        if(reviews)
-          this.clearForm();
+    this.reviewService.deleteReview(this.product.id, review.id).subscribe((review) =>
+      this.reviewService.getProductReviews(this.product.id).subscribe(
+        (reviews) => {
+          this.reviews = reviews as IReview[];
+          this.clearState();
           this._snackBar.open('Review deleted!', '', {
             duration: 2000
           });
-      }
-    )
+        }
+      ));
   }
 
   clearState(): void {
@@ -134,4 +146,5 @@ export class ProductDetailComponent implements OnInit {
   onBack(): void {
     this.router.navigate(['/products']);
   }
+
 }
