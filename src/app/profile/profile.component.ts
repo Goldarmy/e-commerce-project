@@ -3,6 +3,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { IUser } from '../models/user';
 import { OrderService } from '../services/order.service';
 import { ReviewService } from '../services/review.service';
+import { IReview } from '../models/review';
 
 @Component({
   selector: 'app-profile',
@@ -12,17 +13,17 @@ import { ReviewService } from '../services/review.service';
 export class ProfileComponent implements OnInit {
   pageTitle: string = "Profile";
   currentUser: IUser;
-  //reviews: IReview;
+  userReviews: IReview[];
   //orders: IOrder;
 
   constructor(private authenticationService: AuthenticationService, private orderService: OrderService, private reviewService: ReviewService) { }
 
   ngOnInit() {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    //this.reviews = this.reviewService.getUserReviews();
-    //this.orders = this.orderService.getUserReviews();
+    this.reviewService.getUserReviews().subscribe((reviews) => {
+      this.userReviews = reviews;
+    });
   }
 
 
 }
-

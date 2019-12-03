@@ -6,7 +6,7 @@
     <div class="mat-h3"><strong>Username:</strong> {{ currentUser.username }}</div>
     <div class="mat-h3"><strong>Email: </strong>{{ currentUser.email }}</div>
     <div class="mat-h3"><strong>Orders Made: </strong>0</div>
-    <div class="mat-h3"><strong>Reviews Written: </strong>0</div>
+    <div class="mat-h3"><strong>Reviews Written: </strong>{{ userReviews?.length }}</div>
 </mat-card>
 
 <div class="container">
@@ -17,9 +17,19 @@
             </mat-card>
         </mat-tab>
         <mat-tab label="Reviews">
-            <mat-card style="margin-top: 5%; padding: 5%;">
-                <div class="mat-h1">No Reviews to display.</div>
-            </mat-card>
+            <div *ngIf="userReviews?.length > 0;else noUserReviews">
+                <div class="review-item" *ngFor="let review of userReviews">
+                    <span><strong>Review Rating:</strong> {{ review.rating }}</span>
+                    <span><strong>Review Title:</strong> {{ review.title }}</span>
+                    <a [routerLink]="['/product', review.productId]">More Details</a>
+                </div>
+            </div>
+            <ng-template #noUserReviews>
+                <mat-card style="margin-top: 5%; padding: 5%;">
+                    <div class="mat-h1">No Reviews to display.</div>
+                </mat-card>
+            </ng-template>
         </mat-tab>
+
     </mat-tab-group>
 </div>

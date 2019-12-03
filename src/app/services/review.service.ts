@@ -8,6 +8,8 @@ import { map } from 'rxjs/internal/operators/map';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { Observable } from 'rxjs/internal/Observable';
 import { tap } from 'rxjs/internal/operators/tap';
+import { IUser } from '../models/user';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,55 +18,41 @@ export class ReviewService implements OnInit {
 
   reviews: IReview[] = [];
   product: IProduct;
-  options;
 
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth: AuthenticationService) { }
 
   ngOnInit(): void {
   }
 
+  getUserReviews(): Observable<IReview[]> {
+    return this.http.get<IUser>(`${environment.apiUrl}/users/me`, { headers: this.auth.getHeader() }).pipe(map(user => {
+      if (user) {
+        return user.reviews;
+      }
+    }))
+  }
+
   getProductReviews(productId: number): Observable<any> {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-auth-token': localStorage.getItem('currentToken')
-    });
-    this.options = { headers: headers };
-    return this.http.get<IReview[]>(`${environment.apiUrl}/products/${productId}/reviews`, this.options)
+    return this.http.get<IReview[]>(`${environment.apiUrl}/products/${productId}/reviews`, { headers: this.auth.getHeader() })
       .pipe(tap(data => data),
         catchError(this.handleError)
       );
   }
 
   addReview(productId: number, title: string, body: string, rating: number): Observable<any> {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-auth-token': localStorage.getItem('currentToken')
-    });
-    this.options = { headers: headers };
-    return this.http.post<IReview>(`${environment.apiUrl}/products/${productId}/reviews`, { title, body, rating }, this.options)
+    return this.http.post<IReview>(`${environment.apiUrl}/products/${productId}/reviews`, { title, body, rating }, { headers: this.auth.getHeader() })
       .pipe(tap(data => data),
         catchError(this.handleError));
   }
 
   deleteReview(productId: number, reviewId: number): Observable<any> {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-auth-token': localStorage.getItem('currentToken')
-    });
-    this.options = { headers: headers };
-    return this.http.delete<any>(`${environment.apiUrl}/products/${productId}/reviews/${reviewId}`, this.options)
+    return this.http.delete<any>(`${environment.apiUrl}/products/${productId}/reviews/${reviewId}`, { headers: this.auth.getHeader() })
       .pipe(tap(data => data),
         catchError(this.handleError));
   }
 
   updateReview(productId: number, reviewId: number, title: string, body: string, rating: number): Observable<any> {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-auth-token': localStorage.getItem('currentToken')
-    });
-    this.options = { headers: headers };
-    return this.http.put<any>(`${environment.apiUrl}/products/${productId}/reviews/${reviewId}`, { title, body, rating }, this.options)
+    return this.http.put<any>(`${environment.apiUrl}/products/${productId}/reviews/${reviewId}`, { title, body, rating }, { headers: this.auth.getHeader() })
       .pipe(tap(data => data),
         catchError(this.handleError));
   }

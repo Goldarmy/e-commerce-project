@@ -73,7 +73,7 @@
             </a>
         </div>
         <mat-card-title>{{ review.title }} - ({{ review.rating }} / 5)</mat-card-title>
-        <sub>Created on {{ review.createdAt | date:'M/d/yy, h:mm a' }}</sub>
+        <sub>Updated on {{ review.updatedAt | date:'M/d/yy, h:mm a' }}</sub>
         <p>{{ review.body }}</p>
         <mat-divider></mat-divider>
         <div *ngIf="editState && reviewToEdit.id == review.id">

@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthGuard } from '../auth.guard';
 import { AuthenticationService } from '../services/authentication.service';
 import { IUser } from '../models/user';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-product-detail',
@@ -41,7 +42,8 @@ export class ProductDetailComponent implements OnInit {
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private authGuard: AuthGuard,
-    private authenticationService: AuthenticationService) { }
+    private authenticationService: AuthenticationService,
+    private location: Location) { }
 
   ngOnInit() {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
@@ -71,7 +73,7 @@ export class ProductDetailComponent implements OnInit {
         this.reviewForm.get('rating').value).subscribe(review => {
           this.reviewService.getProductReviews(this.product.id).subscribe(
             (reviews) => {
-              this.reviews = reviews as IReview[];
+              this.reviews = (reviews as IReview[]).sort((a,b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
               this.clearForm();
               this._snackBar.open('New review added!', '', {
                 duration: 2000
@@ -98,7 +100,8 @@ export class ProductDetailComponent implements OnInit {
       .subscribe((review) =>
         this.reviewService.getProductReviews(this.product.id).subscribe(
           (reviews) => {
-            this.reviews = reviews as IReview[];
+            this.reviews = (reviews as IReview[]).sort((a,b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+            console.log(this.reviews);
             this.clearState();
             this._snackBar.open('Review updated!', '', {
               duration: 2000
@@ -112,7 +115,7 @@ export class ProductDetailComponent implements OnInit {
     this.reviewService.deleteReview(this.product.id, review.id).subscribe((review) =>
       this.reviewService.getProductReviews(this.product.id).subscribe(
         (reviews) => {
-          this.reviews = reviews as IReview[];
+          this.reviews = (reviews as IReview[]).sort((a,b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
           this.clearState();
           this._snackBar.open('Review deleted!', '', {
             duration: 2000
@@ -144,7 +147,8 @@ export class ProductDetailComponent implements OnInit {
   }
 
   onBack(): void {
-    this.router.navigate(['/products']);
+    //this.router.navigate(['/products']);
+    this.location.back();
   }
 
 }

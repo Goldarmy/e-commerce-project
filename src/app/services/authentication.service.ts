@@ -35,14 +35,8 @@ export class AuthenticationService {
   }
 
   saveUser() {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-auth-token': localStorage.getItem('currentToken')
-    });
-    let options = { headers: headers };
-
     // get user details and store user details in local storage
-    return this.http.get<IUser>(`${environment.apiUrl}/users/me`, options).pipe(map(user => {
+    return this.http.get<IUser>(`${environment.apiUrl}/users/me`, { headers: this.getHeader() }).pipe(map(user => {
       if (user) {
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
@@ -56,5 +50,11 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('currentToken');
     this.currentUserSubject.next(null);
+  }
+
+  getHeader(): HttpHeaders {
+    return new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('x-auth-token', localStorage.getItem('currentToken'));
   }
 }
