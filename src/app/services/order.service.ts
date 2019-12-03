@@ -1,9 +1,26 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment.prod';
+import { IUser } from '../models/user';
+import { map } from 'rxjs/internal/operators/map';
+import { AuthenticationService } from './authentication.service';
+import { IOrder } from '../models/order';
+import { Observable } from 'rxjs/internal/Observable';
+import { IShippingOption } from '../models/shipping-option';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
 
-  constructor() { }
+  constructor(private http: HttpClient, private auth: AuthenticationService) { }
+
+  getUserOrders(): Observable<IOrder[]> {
+    return this.http.get<IOrder[]>(`${environment.apiUrl}/orders`, { headers: this.auth.getHeader() });
+  }
+
+  getShippingOptions(): Observable<IShippingOption[]> {
+    return this.http.get<IShippingOption[]>(`${environment.apiUrl}/shipping-options`, { headers: this.auth.getHeader() });
+  }
+
 }

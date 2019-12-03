@@ -12,18 +12,21 @@
     </div>
     <div class="checkout-summary">
         <div class="mat-h2">Choose a delivery option:</div>
-        <mat-radio-group aria-label="Select an option">
-            <mat-radio-button style="margin: 2%;" value="1">Free Shipping (5-8 business days)</mat-radio-button>
-            <mat-radio-button style="margin: 2%;" value="2">Standard Shipping (4-5 business days) </mat-radio-button>
+        <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="shippingCost">
+            <mat-radio-button class="radio-button" *ngFor="let shippingOption of shippingOptions"
+                [value]="shippingOption.cost">
+                {{ shippingOption.title }}
+            </mat-radio-button>
         </mat-radio-group>
         <div class="mat-h2" style="margin-top: 2%;">Order Summary</div>
         <mat-divider></mat-divider>
         <div class="mat-h4">Items ( {{ getShoppingCartQuantity() }} ) {{ getShoppingCartTotal() | currency }}</div>
-        <div class="mat-h4">Shipping and handling: $0.00</div>
-        <div class="mat-h4">Estimated tax to be collected: $0.00</div>
+        <div class="mat-h4">Shipping and handling: {{ shippingCost | currency }} </div>
+        <div class="mat-h4">Estimated tax to be collected:
+            {{ (getShoppingCartTotal() + shippingCost) * 0.06 | currency }}</div>
         <mat-divider></mat-divider>
-        <div class="mat-h3">Order Total: $0.00</div>
-        <button mat-raised-button color="primary">Pay with Card</button>
+        <div class="mat-h3">Order Total: {{ (getShoppingCartTotal() + shippingCost) * 1.06 | currency }}</div>
+        <button mat-raised-button color="primary" (click)="payWithCard()">Pay with Card</button>
     </div>
 </div>
 
