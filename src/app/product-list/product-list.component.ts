@@ -136,10 +136,13 @@ export class ProductListComponent implements OnInit {
 
   addToCart(product: IProduct): void {
     if (this.authGuard.canActivate(this.route.snapshot, this.router.routerState.snapshot)) {
-      this.cartService.updateCart(product);
-      this._snackBar.open(`${product.title} has been added to your Cart.`, '', {
-        duration: 2000
-      });
+      this.cartService.updateCart(product).subscribe(() => {
+        this.cartService.loadCartProducts().subscribe(() => {
+          this._snackBar.open(`${product.title} has been added to your Cart.`, '', {
+            duration: 2000
+          });
+        });
+      })
     }
   }
 }

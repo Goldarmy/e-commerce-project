@@ -7,7 +7,7 @@
         <div class="checkout-item" *ngFor="let item of shoppingCartitems">
             <span>{{ item.product.title }}</span>
             <span>{{ item.product.price * item.quantity | currency }}</span>
-            <span>{{ item.quantity }}</span>
+            <!-- <span>{{ item.quantity }}</span> -->
         </div>
     </div>
     <div class="checkout-summary">

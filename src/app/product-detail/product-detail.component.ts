@@ -73,7 +73,7 @@ export class ProductDetailComponent implements OnInit {
         this.reviewForm.get('rating').value).subscribe(review => {
           this.reviewService.getProductReviews(this.product.id).subscribe(
             (reviews) => {
-              this.reviews = (reviews as IReview[]).sort((a,b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+              this.reviews = (reviews as IReview[]).sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
               this.clearForm();
               this._snackBar.open('New review added!', '', {
                 duration: 2000
@@ -95,12 +95,11 @@ export class ProductDetailComponent implements OnInit {
   }
 
   updateReview(review: IReview): void {
-    let updatedReview;
     this.reviewService.updateReview(this.product.id, review.id, review.title, review.body, review.rating)
       .subscribe((review) =>
         this.reviewService.getProductReviews(this.product.id).subscribe(
           (reviews) => {
-            this.reviews = (reviews as IReview[]).sort((a,b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+            this.reviews = (reviews as IReview[]).sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
             console.log(this.reviews);
             this.clearState();
             this._snackBar.open('Review updated!', '', {
@@ -115,7 +114,7 @@ export class ProductDetailComponent implements OnInit {
     this.reviewService.deleteReview(this.product.id, review.id).subscribe((review) =>
       this.reviewService.getProductReviews(this.product.id).subscribe(
         (reviews) => {
-          this.reviews = (reviews as IReview[]).sort((a,b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+          this.reviews = (reviews as IReview[]).sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
           this.clearState();
           this._snackBar.open('Review deleted!', '', {
             duration: 2000
@@ -138,11 +137,14 @@ export class ProductDetailComponent implements OnInit {
 
   addToCart(product: IProduct): void {
     if (this.authGuard.canActivate(this.route.snapshot, this.router.routerState.snapshot)) {
-      this.cartService.updateCart(product);
-      this.openDialog({
-        title: 'Cart',
-        message: `${product.title} has been added to your Cart. Would you like to continue shopping or checkout now?`
-      });
+      this.cartService.updateCart(product).subscribe(() => {
+        this.cartService.loadCartProducts().subscribe(() => {
+          this.openDialog({
+            title: 'Cart',
+            message: `${product.title} has been added to your Cart. Would you like to continue shopping or checkout now?`
+          })
+        })
+      })
     }
   }
 
