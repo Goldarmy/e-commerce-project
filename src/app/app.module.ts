@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PaymentDialogComponent } from './payment-dialog/payment-dialog.component';
+import { FaqComponent } from './faq/faq.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { PaymentDialogComponent } from './payment-dialog/payment-dialog.componen
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    PaymentDialogComponent
+    PaymentDialogComponent,
+    FaqComponent
   ],
   entryComponents: [
     DialogComponent,
