@@ -17,6 +17,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
+import { PaymentDialogComponent } from './payment-dialog/payment-dialog.component';
 
 @NgModule({
   declarations: [
@@ -30,10 +31,12 @@ import { ProfileComponent } from './profile/profile.component';
     ShoppingCartComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    PaymentDialogComponent
   ],
   entryComponents: [
-    DialogComponent
+    DialogComponent,
+    PaymentDialogComponent
   ],
   imports: [
     FormsModule,

@@ -13,13 +13,17 @@
     <mat-tab-group>
         <mat-tab label="Orders">
             <div *ngIf="userOrders?.length > 0;else noUserOrders">
-                <div class="review-item" *ngFor="let order of userOrders">
-                    <span> Order Id: {{ order.id }}</span>
-                    <span *ngFor="let order_product of order.order_products">
-                        <span> Product Id: {{ order_product.productId }}</span>
+                <div class="order-item" *ngFor="let order of userOrders">
+                    <span> Order Date: {{ order.createdAt | date:'M/d/yy, h:mm a' }}</span><br>
+                    <span> Order Id: {{ order.id }} | Total items ({{ getTotalCount(order.order_products) }} )</span>
+                    <mat-divider></mat-divider>
+                    <span class="order-details" *ngFor="let order_product of order.order_products">
+                        <span> {{ findOrderProduct(order_product.id).product.title }}</span> <br> 
                         <span> Quantity: {{ order_product.quantity }}</span>
+                        <span> Cost: {{ order_product.quantity * order_product.price | currency }}</span>
+                        <mat-divider></mat-divider>
                     </span>
-                    <span> Shipping Id: {{ order.shippingOptionId }}</span>
+                    <span> Delivery Method: {{ order.shippingOptionId == 1 ?  "Free Shipping" : "Expedited Delivery"  }}</span><br>
                 </div>
             </div>
             <ng-template #noUserOrders>

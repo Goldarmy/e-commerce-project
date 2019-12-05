@@ -24,6 +24,7 @@
         <span>Subtotal ({{ getShoppingCartQuantity() }} items):
             <strong>{{ getShoppingCartTotal() | currency }}</strong></span>
     </div>
+    <button mat-raised-button color="primary" routerLink="/checkout">Checkout</button>
 </div>
 
 <ng-template #emptyCart>

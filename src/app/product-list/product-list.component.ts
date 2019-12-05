@@ -5,6 +5,7 @@ import { ProductService } from '../services/product.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthGuard } from '../auth.guard';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IReview } from '../models/review';
 
 export interface PriceRange {
   text: string;
@@ -144,5 +145,10 @@ export class ProductListComponent implements OnInit {
         });
       })
     }
+  }
+
+  getRatingAvg(reviews:IReview[]){
+    let avg =  reviews.reduce((total, next) => total + next.rating, 0) / reviews.length;
+    return isNaN(avg) ? 0 : avg;
   }
 }

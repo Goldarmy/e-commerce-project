@@ -3,6 +3,8 @@ import { CartService } from '../services/cart.service';
 import { IShoppingCartItem } from '../models/shopping-cart-item';
 import { OrderService } from '../services/order.service';
 import { IShippingOption } from '../models/shipping-option';
+import { MatDialog } from '@angular/material/dialog';
+import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component';
 
 @Component({
   selector: 'app-checkout',
@@ -15,7 +17,7 @@ export class CheckoutComponent implements OnInit {
   shippingOptions: IShippingOption[] = [];
   shippingCost;
 
-  constructor(private cartService: CartService, private orderService: OrderService) { }
+  constructor(private cartService: CartService, private orderService: OrderService, public dialog: MatDialog,) { }
 
   ngOnInit() {
     this.shoppingCartitems = this.cartService.getItems();
@@ -35,8 +37,19 @@ export class CheckoutComponent implements OnInit {
     return this.cartService.getItemCount();
   }
 
+  openDialog(data): void {
+    const dialogRef = this.dialog.open(PaymentDialogComponent, {
+      width: '400px',
+      data: data
+    });
+  }
+  
   payWithCard(){
-    alert("Need to implement!");
+    this.openDialog({
+      title: 'Payment',
+      message: "Please enter your payment card details.",
+      shippingId: this.shippingCost ? 2 : 1
+    })
   }
 
 }
