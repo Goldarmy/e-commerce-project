@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserService } from '../services/user.service';
-import { first } from 'rxjs/internal/operators/first';
+import { first } from 'rxjs/operators';
 
 function MustMatch(controlName: string, matchingControlName: string) {
   return (formGroup: FormGroup) => {

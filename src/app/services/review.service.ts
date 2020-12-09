@@ -3,11 +3,11 @@ import { IReview } from '../models/review';
 import { IProduct } from '../models/product';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
-import { catchError } from 'rxjs/internal/operators/catchError';
-import { map } from 'rxjs/internal/operators/map';
+import { catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { Observable } from 'rxjs/internal/Observable';
-import { tap } from 'rxjs/internal/operators/tap';
+import { tap } from 'rxjs/operators';
 import { IUser } from '../models/user';
 import { AuthenticationService } from './authentication.service';
 
